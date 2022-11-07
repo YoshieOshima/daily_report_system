@@ -6,8 +6,10 @@ public interface JpaConst {
 
     int ROW_PER_PAGE = 15;
 
+    //日報テーブル
     String TABLE_EMP = "employees";
 
+    //日報テーブルカラム
     String EMP_COL_ID = "id"; //id
     String EMP_COL_CODE = "code"; //社員番号
     String EMP_COL_NAME = "name"; //氏名
