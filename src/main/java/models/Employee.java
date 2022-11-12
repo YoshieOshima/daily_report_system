@@ -77,6 +77,12 @@ public class Employee {
     private Integer adminFlag;
 
     /**
+     * 承認者権限があるかどうか（一般：0、課長：1、部長：2）
+     */
+    @Column(name = JpaConst.EMP_COL_APRV_FLAG, nullable = false)
+    private Integer approvalFlag;
+
+    /**
      *登録日時
      */
     @Column(name = JpaConst.EMP_COL_CREATED_AT, nullable = false)

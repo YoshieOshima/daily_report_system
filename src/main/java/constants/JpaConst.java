@@ -6,25 +6,33 @@ public interface JpaConst {
 
     int ROW_PER_PAGE = 15;
 
-    //日報テーブル
+    //従業員テーブル
     String TABLE_EMP = "employees";
 
-    //日報テーブルカラム
+    //従業員テーブルカラム
     String EMP_COL_ID = "id"; //id
     String EMP_COL_CODE = "code"; //社員番号
     String EMP_COL_NAME = "name"; //氏名
     String EMP_COL_PASS = "password"; //パスワード
     String EMP_COL_ADMIN_FLAG = "admin_flag"; //管理者権限
+    String EMP_COL_APRV_FLAG = "approval_flag"; //承認権限
     String EMP_COL_CREATED_AT = "created_at"; //登録日時
     String EMP_COL_UPDATED_AT = "updated_at"; //更新日時
     String EMP_COL_DELETE_FLAG = "delete_flag"; //削除フラグ
 
+    int ROLE_APRV_GENERAL = 0; //承認権限ON(一般)
+    int ROLE_APRV_SECT = 1; //承認権限ON(課長)
+    int ROLE_APRV_DEPT = 2; //承認権限ON(部長)
+
     int ROLE_ADMIN = 1; //管理者権限ON(管理者)
     int ROLE_GENERAL = 0; //管理者権限OFF(一般)
+
     int EMP_DEL_TRUE = 1; //削除フラグON(削除済み)
     int EMP_DEL_FALSE = 0; //削除フラグOFF(現役)
 
+    //日報テーブル
     String TABLE_REP = "reports"; //テーブル名
+    //日報テーブルカラム
     String REP_COL_ID = "id"; //id
     String REP_COL_EMP = "employee_id"; //日報を作成した従業員のid
     String REP_COL_REP_DATE = "report_date"; //いつの日報かを示す日付

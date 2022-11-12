@@ -39,6 +39,11 @@ public class EmployeeView {
     private Integer adminFlag;
 
     /**
+     * 承認権限があるかどうか（一般：0、課長：1、部長：2）
+     */
+    private Integer approvalFlag;
+
+    /**
      *登録日時
      */
     private LocalDateTime createdAt;

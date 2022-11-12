@@ -26,6 +26,13 @@ public class EmployeeConverter {
                         : ev.getAdminFlag() == AttributeConst.ROLE_ADMIN.getIntegerValue()
                                 ? JpaConst.ROLE_ADMIN
                                 : JpaConst.ROLE_GENERAL,
+                ev.getApprovalFlag() == null
+                        ? null
+                        : ev.getApprovalFlag() == AttributeConst.ROLE_APRV_DEPT.getIntegerValue()
+                                ? JpaConst.ROLE_APRV_DEPT
+                                : ev.getApprovalFlag() == AttributeConst.ROLE_APRV_SECT.getIntegerValue()
+                                        ? JpaConst.ROLE_APRV_SECT
+                                        : JpaConst.ROLE_APRV_GENERAL,
                 ev.getCreatedAt(),
                 ev.getUpdatedAt(),
                 ev.getDeleteFlag() == null
@@ -51,6 +58,13 @@ public class EmployeeConverter {
                         : e.getAdminFlag() == JpaConst.ROLE_ADMIN
                                 ? AttributeConst.ROLE_ADMIN.getIntegerValue()
                                 : AttributeConst.ROLE_GENERAL.getIntegerValue(),
+                e.getApprovalFlag() == null
+                        ? null
+                        : e.getApprovalFlag() == JpaConst.ROLE_APRV_DEPT
+                                ? AttributeConst.ROLE_APRV_DEPT.getIntegerValue()
+                                : e.getApprovalFlag() == JpaConst.ROLE_APRV_SECT
+                                        ? AttributeConst.ROLE_APRV_SECT.getIntegerValue()
+                                        : AttributeConst.ROLE_APRV_GENERAL.getIntegerValue(),
                 e.getCreatedAt(),
                 e.getUpdatedAt(),
                 e.getDeleteFlag() == null
@@ -76,6 +90,7 @@ public class EmployeeConverter {
         e.setName(ev.getName());
         e.setPassword(ev.getPassword());
         e.setAdminFlag(ev.getAdminFlag());
+        e.setApprovalFlag(ev.getApprovalFlag());
         e.setCreatedAt(ev.getCreatedAt());
         e.setUpdatedAt(ev.getUpdatedAt());
         e.setDeleteFlag(ev.getDeleteFlag());
