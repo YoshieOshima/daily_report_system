@@ -51,7 +51,6 @@ public enum AttributeConst {
     REP_DATE("report_date"),
     REP_TITLE("title"),
     REP_CONTENT("content_msg"),
-    REP_COMMENT("comment"),
     REP_APPROVAL("approval");
 
     private final String text;

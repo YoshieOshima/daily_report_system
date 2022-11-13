@@ -105,6 +105,11 @@ public class ReportAction extends ActionBase {
                 day = LocalDate.parse(getRequestParam(AttributeConst.REP_DATE));
             }
 
+            Integer aprv = null;
+            if (getRequestParam(AttributeConst.REP_APPROVAL) == null || getRequestParam(AttributeConst.REP_APPROVAL).equals("")) {
+                aprv = 0;
+            }
+
             //セッションからログイン中の従業員情報を取得
             EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
@@ -115,6 +120,7 @@ public class ReportAction extends ActionBase {
                     day,
                     getRequestParam(AttributeConst.REP_TITLE),
                     getRequestParam(AttributeConst.REP_CONTENT),
+                    null,
                     null,
                     null);
 
@@ -160,6 +166,7 @@ public class ReportAction extends ActionBase {
 
         } else {
 
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
             putRequestScope(AttributeConst.REPORT, rv); //取得した日報データ
 
             //詳細画面を表示
@@ -235,7 +242,47 @@ public class ReportAction extends ActionBase {
 
                 //一覧画面にリダイレクト
                 redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
-                
+
+            }
+        }
+    }
+
+    //承認を行う
+    public void approval() throws ServletException, IOException {
+        System.out.println("approval");
+
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+        System.out.println("approval2");
+
+            //idを条件に日報データを取得する
+            ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+            //approval_flagを1にする
+            rv.setApproval(1);
+
+            //日報を承認する
+            List<String> errors = service.update(rv);
+
+            if (errors.size() > 0) {
+                //更新中にエラーが発生した場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.REPORT, rv); //入力された日報情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                //詳細画面を再表示
+                forward(ForwardConst.FW_REP_SHOW);
+
+            } else {
+                //更新中にエラーがなかった場合
+
+                //セッションに承認完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_APPROVED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
+
             }
         }
     }

@@ -44,6 +44,11 @@ public class ReportView {
     private String content;
 
     /**
+     * 日報の承認
+     */
+    private Integer approval;
+
+    /**
      * 登録日時
      */
     private LocalDateTime createdAt;

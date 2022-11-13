@@ -84,6 +84,12 @@ public class Report {
     private String content;
 
     /**
+     * 日報の承認
+    */
+    @Column(name = JpaConst.REP_COL_APRV, nullable = false)
+    private Integer approval;
+    
+    /**
      * 登録日時
      */
     @Column(name = JpaConst.REP_COL_CREATED_AT, nullable = false)
