@@ -247,13 +247,13 @@ public class ReportAction extends ActionBase {
         }
     }
 
-    //承認を行う
+    /**
+    * 承認を行う
+    */
     public void approval() throws ServletException, IOException {
-        System.out.println("approval");
 
         //CSRF対策 tokenのチェック
         if (checkToken()) {
-        System.out.println("approval2");
 
             //idを条件に日報データを取得する
             ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
@@ -280,7 +280,48 @@ public class ReportAction extends ActionBase {
                 //セッションに承認完了のフラッシュメッセージを設定
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_APPROVED.getMessage());
 
-                //一覧画面にリダイレクト
+                //詳細画面にリダイレクト
+                redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
+
+            }
+        }
+    }
+
+
+    /**
+    * 承認を取り消す
+    */
+    public void deleteapproval() throws ServletException, IOException {
+
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+
+            //idを条件に日報データを取得する
+            ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+            //approval_flagを0にする
+            rv.setApproval(0);
+
+            //日報を未承認状態にする
+            List<String> errors = service.update(rv);
+
+            if (errors.size() > 0) {
+                //更新中にエラーが発生した場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.REPORT, rv); //入力された日報情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                //詳細画面を再表示
+                forward(ForwardConst.FW_REP_SHOW);
+
+            } else {
+                //更新中にエラーがなかった場合
+
+                //セッションに承認完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_DELETE_APPROVAL.getMessage());
+
+                //詳細画面にリダイレクト
                 redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
 
             }

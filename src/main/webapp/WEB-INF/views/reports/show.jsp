@@ -8,6 +8,7 @@
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commEdt" value="${ForwardConst.CMD_EDIT.getValue()}" />
 <c:set var="approval" value="${ForwardConst.CMD_APPROVAL.getValue()}" />
+<c:set var="deleteapproval" value="${ForwardConst.CMD_DELETE_APPROVAL.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -56,14 +57,23 @@
             </p>
         </c:if>
 
-        <c:if test="${report.approval == 0}">
+
         <c:if test="${sessionScope.login_employee.id != report.employee.id}">
+        <c:if test="${report.approval == 0}">
         <form method="POST" action="<c:url value='?action=${actRep}&command=${approval}' />">
             <input type="hidden" name="${AttributeConst.REP_ID.getValue()}" value="${report.id}" />
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
             <button type="submit">承認する</button>
         </form>
-        </c:if></c:if>
+        </c:if>
+        <c:if test="${report.approval == 1}">
+        <form method="POST" action="<c:url value='?action=${actRep}&command=${deleteapproval}' />">
+            <input type="hidden" name="${AttributeConst.REP_ID.getValue()}" value="${report.id}" />
+            <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+            <button type="submit">承認を取り消す</button>
+        </form>
+        </c:if>
+        </c:if>
 
         <p>
             <a href="<c:url value='?action=${actRep}&command=${commIdx}' />">一覧に戻る</a>
