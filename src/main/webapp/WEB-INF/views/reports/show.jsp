@@ -48,6 +48,17 @@
                     <c:otherwise>未承認</c:otherwise></c:choose>
                     </td>
                 </tr>
+                <c:if test="${report.approval == 1}">
+                <tr>
+                    <th>承認日時</th>
+                    <fmt:parseDate value="${report.approvedAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="approvedDay" type="date" />
+                    <td><fmt:formatDate value="${approvedDay}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                </tr>
+                <tr>
+                    <th>承認者</th>
+                    <td><c:out value="${report.approvedBy}" /></td>
+                </tr>
+                </c:if>
             </tbody>
         </table>
 
@@ -74,6 +85,8 @@
         </form>
         </c:if>
         </c:if>
+
+
 
         <p>
             <a href="<c:url value='?action=${actRep}&command=${commIdx}' />">一覧に戻る</a>

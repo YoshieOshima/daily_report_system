@@ -126,6 +126,28 @@ public class ReportService extends ServiceBase {
         return errors;
     }
 
+    /**
+     * 画面から入力された日報の登録内容を元に、日報データを更新する
+     * @param rv 日報の更新内容
+     * @return バリデーションで発生したエラーのリスト
+     */
+    public List<String> approved(ReportView rv) {
+
+        //バリデーションを行う
+        List<String> errors = ReportValidator.validate(rv);
+
+        if (errors.size() == 0) {
+
+            //承認日時を現在時刻に設定
+            LocalDateTime ldt = LocalDateTime.now();
+            rv.setApprovedAt(ldt);
+
+            updateInternal(rv);
+        }
+
+        //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
+        return errors;
+    }
 
     /**
      * idを条件にデータを1件取得する

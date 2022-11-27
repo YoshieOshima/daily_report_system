@@ -24,6 +24,8 @@ public class ReportConverter {
                 rv.getTitle(),
                 rv.getContent(),
                 rv.getApproval(),
+                rv.getApprovedBy(),
+                rv.getApprovedAt(),
                 rv.getCreatedAt(),
                 rv.getUpdatedAt());
     }
@@ -47,6 +49,8 @@ public class ReportConverter {
                 r.getTitle(),
                 r.getContent(),
                 r.getApproval(),
+                r.getApprovedBy(),
+                r.getApprovedAt(),
                 r.getCreatedAt(),
                 r.getUpdatedAt());
     }
@@ -80,6 +84,8 @@ public class ReportConverter {
         r.setTitle(rv.getTitle());
         r.setContent(rv.getContent());
         r.setApproval(rv.getApproval());
+        r.setApprovedBy(rv.getApprovedBy());
+        r.setApprovedAt(rv.getApprovedAt());
         r.setCreatedAt(rv.getCreatedAt());
         r.setUpdatedAt(rv.getUpdatedAt());
     }

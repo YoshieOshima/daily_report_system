@@ -120,6 +120,8 @@ public class ReportAction extends ActionBase {
                     day,
                     getRequestParam(AttributeConst.REP_TITLE),
                     getRequestParam(AttributeConst.REP_CONTENT),
+                    aprv,
+                    null,
                     null,
                     null,
                     null);
@@ -203,7 +205,6 @@ public class ReportAction extends ActionBase {
         }
     }
 
-
     /**
      * 更新を行う
      * @throws ServletException
@@ -258,11 +259,15 @@ public class ReportAction extends ActionBase {
             //idを条件に日報データを取得する
             ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
+          //セッションからログイン中の従業員情報を取得
+            EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+
             //approval_flagを1にする
             rv.setApproval(1);
+            rv.setApprovedBy(ev.getName());
 
             //日報を承認する
-            List<String> errors = service.update(rv);
+            List<String> errors = service.approved(rv);
 
             if (errors.size() > 0) {
                 //更新中にエラーが発生した場合
@@ -303,7 +308,7 @@ public class ReportAction extends ActionBase {
             rv.setApproval(0);
 
             //日報を未承認状態にする
-            List<String> errors = service.update(rv);
+            List<String> errors = service.approved(rv);
 
             if (errors.size() > 0) {
                 //更新中にエラーが発生した場合

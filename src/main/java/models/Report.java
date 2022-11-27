@@ -85,10 +85,22 @@ public class Report {
 
     /**
      * 日報の承認
-    */
+     */
     @Column(name = JpaConst.REP_COL_APRV, nullable = false)
     private Integer approval;
-    
+
+    /**
+     * 日報の承認者
+     */
+    @Column(name = JpaConst.REP_COL_APPROVED_BY, length = 255, nullable = true)
+    private String approvedBy;
+
+    /**
+     * 日報の承認日時
+     */
+    @Column(name = JpaConst.REP_COL_APPROVED_AT, nullable = true)
+    private LocalDateTime approvedAt;
+
     /**
      * 登録日時
      */
